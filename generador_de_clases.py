@@ -1,4 +1,5 @@
 import json
+from funciones_generadas import verificador_de_archivos as verificador
 
 
 class Cliente():
@@ -48,12 +49,16 @@ class Cliente():
     class Razon():
         def __init__(self, datos):
             self.limite_extraccion_diario = datos.limites()[0]
+            self.limite_extraccion_diario_restante = self.limite_extraccion_diario
             self.limite_transferencia_recibida = datos.limites()[1]
+            self.limite_trans_restante = self.limite_transferencia_recibida
             self.saldo_en_cuenta = 0.0
             self.costo_transferencias = datos.limites()[2]
             self.saldo_descubierto_disponible = datos.limites()[3]
             self.limite_chequeras = datos.limites()[4]
+            self.limite_chequeras_restante = self.limite_chequeras
             self.limite_creditos = datos.limites()[5]
+            self.limite_creditos_restante = self.limite_creditos
             self.movimientos = []
             self.tarjetas = 0
             self.chequeras = 0
@@ -63,10 +68,12 @@ class Cliente():
             self.tarjetas = trans["totalTarjetasDeCreditoActualmente"]
             self.chequeras = trans["totalChequerasActualmente"]
             self.saldo_en_cuenta = trans["saldoEnCuenta"]
+            self.limite_creditos_restante = self.limite_creditos - trans["totalTarjetasDeCreditoActualmente"]
+            self.limite_chequeras_restante = self.limite_chequeras - trans["totalChequerasActualmente"]
 
             if trans["tipo"] == "RETIRO_EFECTIVO_CAJERO_AUTOMATICO":
                 self.movimientos.append(self.RazonRetiroEfectivo(trans))
-                self.limite_extraccion_diario = trans["cupoDiarioRestante"]
+                self.limite_extraccion_diario_restante = trans["cupoDiarioRestante"]
             elif trans["tipo"] == "ALTA_TARJETA_CREDITO":
                 self.movimientos.append(self.RazonAltaTarjetaCredito(trans))
             elif trans["tipo"] == "ALTA_CHEQUERA":
@@ -77,7 +84,8 @@ class Cliente():
                 self.movimientos.append(self.RazonTransferenciaEnviada(trans))
             elif trans["tipo"] == "TRANSFERENCIA_RECIBIDA":
                 self.movimientos.append(self.RazonTransferenciaRecibida(trans))
-                self.limite_transferencia_recibida -= trans["monto"]
+                if trans["estado"] == "ACEPTADA":
+                    self.limite_trans_restante -= trans["monto"]
 
         class RazonAltaChequera():
             def __init__(self, trans):
@@ -120,9 +128,13 @@ class Cliente():
                 self.fecha = trans["fecha"]
 
 
-archivo = "eventos_black.json"
-with open(archivo) as f:
-    datos = json.load(f)
-usuario = Cliente(datos)
+def generar_clase(archivo):
+    with open(archivo) as f:
+        datos = json.load(f)
+    errores = verificador(datos)
+    if len(errores) > 0:
+        print("Los siguientes elementos estan mal escritos o faltan en el archivo enviado",errores)
+        return errores
+    usuario = Cliente(datos)
+    return usuario
 
-print(usuario.razon.limite_creditos)
