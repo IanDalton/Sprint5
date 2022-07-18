@@ -1,0 +1,29 @@
+{
+    "title": "transacciones",
+    "type": "object",
+    "required": [
+        "monto",
+        "totalTarjetasDeCreditoActualmente",
+        "totalChequerasActualmente",
+        "estado",
+        "cuentaNumero",
+        "fecha"
+    ],
+    "properties": {
+        "monto": {
+            "type": "number"
+        },
+        "totalTarjetasDeCreditoActualmente": {
+            "type": "number"
+        },
+        "totalChequerasActualmente": {
+            "type": "number"
+        },
+        "cuentaNumero": {
+            "type": "number"
+        },
+        "fecha": {
+            "type": "string"
+        }
+    }
+}

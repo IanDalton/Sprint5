@@ -1,0 +1,36 @@
+{
+    "title": "main",
+    "type": "object",
+    "required": [
+        "numero",
+        "nombre",
+        "apellido",
+        "dni",
+        "tipo",
+        "direccion",
+        "transacciones"
+    ],
+    "properties": {
+        "numero": {
+            "type": "number"
+        },
+        "nombre": {
+            "type": "string"
+        },
+        "apellido": {
+            "type": "string"
+        },
+        "dni": {
+            "type": "string"
+        },
+        "tipo": {
+            "type": "string"
+        },
+        "direccion": {
+            "type": "object"
+        },
+        "transacciones": {
+            "type": "array"
+        }
+    }
+}
