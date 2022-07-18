@@ -1,5 +1,4 @@
 import json
-from funciones_generadas import verificador_de_archivos as verificador
 from jinja2 import Environment, PackageLoader, select_autoescape
 from funciones_generadas import validador_TPS as verificador
 
@@ -129,9 +128,15 @@ class Cliente():
                 self.fecha = trans["fecha"]
 
 
-def generar_clase(archivo):
+def generar_clase():
+    archivo = input("Ingrese nombre del archivo a abrir: ")
     with open(archivo) as f:
         datos = json.load(f)
+        env = Environment(loader=PackageLoader("paquete"), autoescape=select_autoescape())
+    template = env.get_template("template.html")
+    with open("reporte.html", "w") as f:
+        f.write(template.render(tps=datos))
+    # webbrowser.open_new_tab(archivo)
     errores = verificador(datos)
     if errores:
         print("El archivo enviado esta mal formulado")
@@ -140,10 +145,4 @@ def generar_clase(archivo):
     return usuario
 
 
-with open("eventos_black.json") as f: 
-    datos = json.load(f)
-env = Environment(loader=PackageLoader("paquete"), autoescape=select_autoescape())
-template = env.get_template("template.html")
-with open("reporte.html", "w") as f:
-    f.write(template.render(tps=datos))
-
+generar_clase()

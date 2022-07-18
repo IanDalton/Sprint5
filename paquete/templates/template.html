@@ -18,7 +18,14 @@
     <h2>{{tps.dni}}</h2>
     <h2>{{tps.numero}}</h2>
     <h2>{{tps.tipo}}</h2>
-    <h2>{{tps.direccion}}</h2>
+    <div>
+    {{tps.direccion["calle"]}}
+    {{tps.direccion["numero"]}},
+    {{tps.direccion["ciudad"]}},
+    {{tps.direccion["provincia"]}},
+    {{tps.direccion["pais"]}}
+    </div>
+
     <table class="table">
       <thead>
         <tr>
@@ -32,11 +39,11 @@
       <tbody>
         {% for transaccion in tps.transacciones %}
         <tr>
-          <td>{{tps.transacciones.fecha}}</td>
-          <td>{{tps.transacciones[tipo]}}</td>
-          <td>{{tps.transacciones[estado]}}</td>
-          <td>{{tps.transacciones[monto]}}</td>
-          <td>{{tps.transacciones["razon"]}}</td>
+          <td>{{transaccion["fecha"]}}</td>
+          <td>{{transaccion["tipo"]}}</td>
+          <td>{{transaccion["estado"]}}</td>
+          <td>{{transaccion["monto"]}}</td>
+          <td>{{transaccion["razon"]}}</td>
         </tr>
         {% endfor %}
       </tbody>
