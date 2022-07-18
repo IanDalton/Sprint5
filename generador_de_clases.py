@@ -1,5 +1,5 @@
 import json
-from funciones_generadas import verificador_de_archivos as verificador
+from funciones_generadas import validador_TPS as verificador
 
 
 class Cliente():
@@ -67,7 +67,6 @@ class Cliente():
             self.saldo_en_cuenta = trans["saldoEnCuenta"]
             self.tarjetas = trans["totalTarjetasDeCreditoActualmente"]
             self.chequeras = trans["totalChequerasActualmente"]
-            self.saldo_en_cuenta = trans["saldoEnCuenta"]
             self.limite_creditos_restante = self.limite_creditos - trans["totalTarjetasDeCreditoActualmente"]
             self.limite_chequeras_restante = self.limite_chequeras - trans["totalChequerasActualmente"]
 
@@ -132,8 +131,8 @@ def generar_clase(archivo):
     with open(archivo) as f:
         datos = json.load(f)
     errores = verificador(datos)
-    if len(errores) > 0:
-        print("Los siguientes elementos estan mal escritos o faltan en el archivo enviado",errores)
+    if errores:
+        print("El archivo enviado esta mal formulado")
         return errores
     usuario = Cliente(datos)
     return usuario
