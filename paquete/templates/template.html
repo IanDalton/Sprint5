@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+      integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
+      crossorigin="anonymous"
+    />
+    <title>TPS</title>
+  </head>
+  <body>
+    <h1>Reporte</h1>
+    <h2>{{tps.nombre}}</h2>
+    <h2>{{tps.dni}}</h2>
+    <h2>{{tps.numero}}</h2>
+    <h2>{{tps.tipo}}</h2>
+    <h2>{{tps.direccion}}</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Fecha</th>
+          <th scope="col">Tipo de operacion</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Monto</th>
+          <th scope="col">Razon</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for transaccion in tps.transacciones %}
+        <tr>
+          <td>{{tps.transacciones.fecha}}</td>
+          <td>{{tps.transacciones[tipo]}}</td>
+          <td>{{tps.transacciones[estado]}}</td>
+          <td>{{tps.transacciones[monto]}}</td>
+          <td>{{tps.transacciones["razon"]}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
