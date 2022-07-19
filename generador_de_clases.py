@@ -1,6 +1,7 @@
 import json
 from jinja2 import Environment, PackageLoader, select_autoescape
 from funciones_generadas import validador_TPS as verificador
+import webbrowser
 
 
 class Cliente():
@@ -136,7 +137,7 @@ def generar_clase():
     template = env.get_template("template.html")
     with open("reporte.html", "w") as f:
         f.write(template.render(tps=datos))
-    # webbrowser.open_new_tab(archivo)
+    webbrowser.open('reporte.html')
     errores = verificador(datos)
     if errores:
         print("El archivo enviado esta mal formulado")
