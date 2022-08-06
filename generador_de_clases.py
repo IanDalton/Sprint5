@@ -1,5 +1,4 @@
 import json
-from jinja2 import Environment, PackageLoader, select_autoescape
 from funciones_generadas import validador_TPS as verificador
 import webbrowser
 
@@ -128,12 +127,14 @@ class Cliente():
                 self.monto = trans["monto"]
                 self.fecha = trans["fecha"]
 
+from jinja2 import Environment, PackageLoader, select_autoescape
+
 
 def generar_clase():
     archivo = input("Ingrese nombre del archivo a abrir: ")
     with open(archivo) as f:
         datos = json.load(f)
-        env = Environment(loader=PackageLoader("paquete"), autoescape=select_autoescape())
+        env = Environment(loader=PackageLoader("paquete"),autoescape=select_autoescape())
     template = env.get_template("template.html")
     with open("reporte.html", "w") as f:
         f.write(template.render(tps=datos))
