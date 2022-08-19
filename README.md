@@ -24,7 +24,7 @@ Para instalar las dependencias, ejecutar en la consola:
 Para correr el programa:
 
 -  Se debe ingresar por consola el nombre del archivo con la extension .json 
-    Ejemplo: eventos_black.json
+    Ejemplo: python generador_resumen.py eventos_black.json
 
 ## Autores del Proyecto
 
