@@ -5,8 +5,7 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 
 
 datos = cliente(sys.argv[1])
-
-if type(datos) == 'dict':
+if str(type(datos)) == "<class 'dict'>":
     env = Environment(loader=PackageLoader("paquete"),autoescape=select_autoescape())
     template = env.get_template("template.html")
     with open("reporte.html", "w") as f:
